@@ -2,6 +2,11 @@ import type { SelectedStyleOptions } from '@/types';
 import { kebabCase } from 'change-case';
 import getAvatarOptions from '@/utils/getAvatarOptions';
 
+const apiUrl = (
+  import.meta.env.VITE_API_URL || 'https://dice-lab.camcap.co'
+).replace(/\/+$/, '');
+const apiVersion = import.meta.env.VITE_API_VERSION || '10.x';
+
 export default function getApiUrl(
   styleName: string,
   options: SelectedStyleOptions,
@@ -27,7 +32,7 @@ export default function getApiUrl(
     })
     .join('&');
 
-  return `https://api.dicebear.com/10.x/${kebabCase(styleName)}/${format}${
+  return `${apiUrl}/${apiVersion}/${kebabCase(styleName)}/${format}${
     qs ? `?${qs}` : ''
   }`;
 }
