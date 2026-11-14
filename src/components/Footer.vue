@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useMainStore from '@/stores/main';
 import type { Style } from '@dicebear/core';
-import { computed } from 'vue';
+import { computed, ref, useId } from 'vue';
 import availableStyles from '@/config/styles';
 import { useI18n } from 'vue-i18n';
 import {
@@ -18,6 +18,9 @@ const store = useMainStore();
 const { t } = useI18n();
 
 const version = __dicebearEditorVersion;
+
+const creditsId = useId();
+const showCredits = ref(false);
 
 const visibleStyles = computed<Style[]>(() => {
   if (props.tab === 'style') {
@@ -73,72 +76,108 @@ const metaList = computed(() => {
 
 <template>
   <div class="footer">
-    <div class="footer-header">DiceBear Editor - v.{{ version }}</div>
-    <ul class="footer-links">
-      <li>
-        <a :href="t('documentationLink')" target="_blank">
-          {{ t('documentation') }}
-        </a>
-      </li>
-      <li v-if="privacyPolicyUrl">
-        <a :href="privacyPolicyUrl" target="_blank">
-          {{ t('privacyPolicy') }}
-        </a>
-      </li>
-      <li v-if="cookiePolicyUrl">
-        <a :href="cookiePolicyUrl" target="_blank">
-          {{ t('cookiePolicy') }}
-        </a>
-      </li>
-      <li v-if="legalNoticeUrl">
-        <a :href="legalNoticeUrl" target="_blank">
-          {{ t('legalNotice') }}
-        </a>
-      </li>
-      <li>
-        CDN Sponsored by
-        <a href="https://bunny.net/" target="_blank" rel="noopener sponsored"
-          >bunny.net</a
-        >
-        (Advertisement)
-      </li>
-    </ul>
-    <div class="footer-header" v-if="metaList.length > 0">
-      {{ t('licenses') }}
+    <button
+      type="button"
+      class="footer-toggle"
+      :aria-expanded="showCredits"
+      :aria-controls="creditsId"
+      @click="showCredits = !showCredits"
+    >
+      {{ t('credits') }}
+    </button>
+    <div v-show="showCredits" :id="creditsId" class="footer-credits">
+      <div class="footer-header">DiceBear Editor - v.{{ version }}</div>
+      <ul class="footer-links">
+        <li>
+          <a :href="t('documentationLink')" target="_blank">
+            {{ t('documentation') }}
+          </a>
+        </li>
+        <li v-if="privacyPolicyUrl">
+          <a :href="privacyPolicyUrl" target="_blank">
+            {{ t('privacyPolicy') }}
+          </a>
+        </li>
+        <li v-if="cookiePolicyUrl">
+          <a :href="cookiePolicyUrl" target="_blank">
+            {{ t('cookiePolicy') }}
+          </a>
+        </li>
+        <li v-if="legalNoticeUrl">
+          <a :href="legalNoticeUrl" target="_blank">
+            {{ t('legalNotice') }}
+          </a>
+        </li>
+        <li>
+          CDN Sponsored by
+          <a href="https://bunny.net/" target="_blank" rel="noopener sponsored"
+            >bunny.net</a
+          >
+          (Advertisement)
+        </li>
+      </ul>
+      <div class="footer-header" v-if="metaList.length > 0">
+        {{ t('licenses') }}
+      </div>
+      <p class="footer-licenses" v-if="metaList.length > 0">
+        <template v-for="meta in metaList" :key="meta.sourceUrl">
+          <a :href="meta.sourceUrl" target="_blank" rel="noopener noreferrer">{{
+            meta.title
+          }}</a>
+          by
+          <a
+            :href="meta.creatorUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ meta.creator }}</a
+          >
+          /
+          <a
+            :href="meta.licenseUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ meta.licenseName?.replace(/\.$/, '') }}</a>.
+          {{ ' ' }}
+        </template>
+        <template v-if="metaList.length === 1">
+          Remix of the original.
+        </template>
+        <template v-else>
+          - All avatars are remixes of the original works.
+        </template>
+      </p>
     </div>
-    <p class="footer-licenses" v-if="metaList.length > 0">
-      <template v-for="meta in metaList" :key="meta.sourceUrl">
-        <a :href="meta.sourceUrl" target="_blank" rel="noopener noreferrer">{{
-          meta.title
-        }}</a>
-        by
-        <a :href="meta.creatorUrl" target="_blank" rel="noopener noreferrer">{{
-          meta.creator
-        }}</a>
-        /
-        <a :href="meta.licenseUrl" target="_blank" rel="noopener noreferrer">{{
-          meta.licenseName?.replace(/\.$/, '')
-        }}</a
-        >.
-        {{ ' ' }}
-      </template>
-      <template v-if="metaList.length === 1"> Remix of the original. </template>
-      <template v-else>
-        - All avatars are remixes of the original works.
-      </template>
-    </p>
   </div>
 </template>
 
 <style lang="scss">
 .footer {
-  background-color: #f8fafc;
-  padding: 16px;
   margin-top: 40px;
   color: #64748b;
   font-size: 14px;
   line-height: 1.6;
-  border-radius: 12px;
+
+  &-toggle {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px dashed;
+    background: none;
+    color: currentColor;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      border-bottom-style: solid;
+      color: #475569;
+    }
+  }
+
+  &-credits {
+    background-color: #f8fafc;
+    padding: 16px;
+    margin-top: 12px;
+    border-radius: 12px;
+  }
 
   &-header {
     margin-top: 20px;
