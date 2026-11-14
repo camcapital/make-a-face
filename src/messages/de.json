@@ -73,6 +73,7 @@
   "documentationLink": "https://www.dicebear.com/",
   "licenses": "Lizenzen",
   "credits": "Credits",
+  "basedOn": "basierend auf DiceBear Editor - v.{version}",
   "moodVariant": "Stimmung",
   "expressionVariant": "Gesichtsausdruck",
   "rearHairVariant": "Hinteres Haar",

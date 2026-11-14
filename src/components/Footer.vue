@@ -86,7 +86,8 @@ const metaList = computed(() => {
       {{ t('credits') }}
     </button>
     <div v-show="showCredits" :id="creditsId" class="footer-credits">
-      <div class="footer-header">DiceBear Editor - v.{{ version }}</div>
+      <div class="footer-header">Make A Face</div>
+      <div>{{ t('basedOn', { version }) }}</div>
       <ul class="footer-links">
         <li>
           <a :href="t('documentationLink')" target="_blank">

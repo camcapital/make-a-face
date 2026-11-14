@@ -73,6 +73,7 @@
   "documentationLink": "https://www.dicebear.com/",
   "licenses": "Licenses",
   "credits": "Credits",
+  "basedOn": "based on DiceBear Editor - v.{version}",
   "moodVariant": "Mood",
   "expressionVariant": "Expression",
   "rearHairVariant": "Rear Hair",

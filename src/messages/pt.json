@@ -73,6 +73,7 @@
   "documentationLink": "https://www.dicebear.com/",
   "licenses": "Licenças",
   "credits": "Créditos",
+  "basedOn": "baseado no DiceBear Editor - v.{version}",
   "moodVariant": "Humor",
   "expressionVariant": "Expressão",
   "rearHairVariant": "Cabelo Traseiro",
