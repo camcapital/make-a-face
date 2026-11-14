@@ -121,7 +121,7 @@ function onFullscreen() {
     <Button
       rounded
       severity="secondary"
-      :label="t('save')"
+      :label="t('download')"
       @click="onDownload"
     />
   </div>
