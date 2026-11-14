@@ -1,0 +1,56 @@
+name: Deploy
+
+# Builds the editor and deploys it as a static AppWrite Site at
+# https://makeaface.camcap.dev. The AppWrite credentials live on the
+# `Production` environment: APPWRITE_API_KEY (secret), APPWRITE_ENDPOINT and
+# APPWRITE_PROJECT_ID (variables).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://makeaface.camcap.dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm test
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_API_VERSION: ${{ vars.VITE_API_VERSION }}
+
+      - name: Package
+        run: tar -czf "$RUNNER_TEMP/site.tar.gz" -C dist .
+
+      - name: Deploy to AppWrite
+        run: node scripts/deploy.mjs "$RUNNER_TEMP/site.tar.gz"
+        env:
+          APPWRITE_ENDPOINT: ${{ vars.APPWRITE_ENDPOINT }}
+          APPWRITE_PROJECT_ID: ${{ vars.APPWRITE_PROJECT_ID }}
+          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
+
+      - name: Smoke test
+        run: |
+          curl -fsS --retry 12 --retry-delay 10 --retry-all-errors \
+            https://makeaface.camcap.dev/ | grep -q '<div id="app">'
