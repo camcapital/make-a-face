@@ -109,13 +109,6 @@ const metaList = computed(() => {
             {{ t('legalNotice') }}
           </a>
         </li>
-        <li>
-          CDN Sponsored by
-          <a href="https://bunny.net/" target="_blank" rel="noopener sponsored"
-            >bunny.net</a
-          >
-          (Advertisement)
-        </li>
       </ul>
       <div class="footer-header" v-if="metaList.length > 0">
         {{ t('licenses') }}
