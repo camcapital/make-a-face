@@ -106,7 +106,8 @@ function onFullscreen() {
         icon="pi pi-sparkles"
         severity="secondary"
         rounded
-        :aria-label="t('shuffle')"
+        :aria-label="t('random')"
+        :title="t('random')"
         @click="onShuffle"
       />
       <Button
@@ -114,7 +115,8 @@ function onFullscreen() {
         icon="pi pi-window-maximize"
         severity="secondary"
         rounded
-        :aria-label="t('shuffle')"
+        :aria-label="t('fullscreen')"
+        :title="t('fullscreen')"
         @click="onFullscreen"
       />
     </div>
@@ -122,6 +124,7 @@ function onFullscreen() {
       rounded
       severity="secondary"
       :label="t('download')"
+      :title="t('download')"
       @click="onDownload"
     />
   </div>
