@@ -36,6 +36,8 @@
     "@types/node": "^25.1.0",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-vue": "^6.0.3",
+    "@vue/test-utils": "^2.5.1",
+    "happy-dom": "^21.0.4",
     "node-appwrite": "^30.0.0",
     "npm-run-all2": "^8.0.4",
     "typescript": "^5.9.3",
