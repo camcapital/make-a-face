@@ -34,6 +34,7 @@
     "@types/node": "^25.1.0",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-vue": "^6.0.3",
+    "node-appwrite": "^30.0.0",
     "npm-run-all2": "^8.0.4",
     "typescript": "^5.9.3",
     "unplugin-vue-components": "^31.0.0",

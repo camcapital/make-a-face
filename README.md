@@ -1,61 +1,64 @@
-# DiceBear editor (beta)
+# Make A Face
 
-[![Preview](https://raw.githubusercontent.com/dicebear/dicebear/10.x/apps/editor/preview.png)](https://editor.dicebear.com)
+A self-hosted copy of the [DiceBear editor](https://editor.dicebear.com/),
+served at <https://makeaface.camcap.dev>. Avatars are drawn in the browser with
+`@dicebear/core`; the URLs it copies and the PNGs it downloads come from our
+DiceBear API instance at `https://dice-lab.camcap.co` instead of
+`api.dicebear.com`.
 
-Read more about the project here:
-[https://github.com/dicebear/dicebear/discussions/286](https://github.com/dicebear/dicebear/discussions/286)
+[![Preview](preview.png)](https://makeaface.camcap.dev)
 
-## Recommended IDE setup
+## Upstream
 
-[VSCode](https://code.visualstudio.com/) +
-[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and
-disable Vetur) +
-[TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+The app is a copy of `apps/editor` from
+[dicebear/dicebear](https://github.com/dicebear/dicebear) at tag
+[`v10.7.0`](https://github.com/dicebear/dicebear/tree/v10.7.0/apps/editor),
+turned into a standalone npm project that uses the published `@dicebear/*`
+packages. It stays on 10.x because our server runs `dicebear/api:4`, which
+serves `/10.x` only; the preview and the server's rendering must use the same
+major version.
 
-## Type support for `.vue` imports in TS
+Changes from upstream:
 
-TypeScript cannot handle type information for `.vue` imports by default, so we
-replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need
-[TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
-to make the TypeScript language service aware of `.vue` types.
+- `src/utils/getApiUrl.ts` reads the API base URL and version from
+  `VITE_API_URL` and `VITE_API_VERSION`.
+- `scripts/deploy.mjs` and `.github/workflows/` build and deploy the site.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has
-also implemented a
-[Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669)
-that is more performant. You can enable it by the following steps:
+DiceBear is MIT licensed by Florian Körner; see [LICENSE](LICENSE). Each avatar
+style has its own license, which the editor shows when you download.
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select
-      `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the
-   command palette.
+## Configuration
 
-## Customize configuration
+Set at build time (see `.env.example`):
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+| Variable | Default | |
+| --- | --- | --- |
+| `VITE_API_URL` | `https://dice-lab.camcap.co` | DiceBear API base URL |
+| `VITE_API_VERSION` | `10.x` | API version path segment |
+| `VITE_PRIVACY_POLICY_URL` | empty | Footer legal links; hidden when empty |
+| `VITE_COOKIE_POLICY_URL` | empty | |
+| `VITE_LEGAL_NOTICE_URL` | empty | |
 
-## Project setup
+## Development
+
+Requires Node 20.19 or later.
 
 ```sh
 npm install
+npm run dev     # dev server with hot reload
+npm run build   # validate messages, type-check and build to dist/
 ```
 
-### Compile and hot-reload for development
+## Deployment
 
-```sh
-npm run build
-npm run dev --workspace @dicebear/editor
-```
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds `dist/`,
+uploads it as a static AppWrite Site (`makeaface`), and points
+`makeaface.camcap.dev` at it. It can also be run by hand from the Actions tab.
 
-### Type-check, compile and minify for production
+The workflow uses the `Production` environment:
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint --workspace @dicebear/editor
-```
+- Secret `APPWRITE_API_KEY`: needs the `sites.read`, `sites.write`,
+  `rules.read` and `rules.write` scopes.
+- Variables `APPWRITE_ENDPOINT` and `APPWRITE_PROJECT_ID`.
+- Optional variables `VITE_API_URL` and `VITE_API_VERSION` override the
+  defaults above.
