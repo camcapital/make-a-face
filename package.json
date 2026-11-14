@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "validate:messages": "node scripts/validate-messages.mjs"
+    "validate:messages": "node scripts/validate-messages.mjs",
+    "test": "vitest run"
   },
   "dependencies": {
     "@dicebear/core": "10.7.0",
@@ -29,6 +30,7 @@
     "vue-i18n": "^11.2.8"
   },
   "devDependencies": {
+    "@amiceli/vitest-cucumber": "^8.0.0",
     "@intlify/unplugin-vue-i18n": "^11.0.3",
     "@primevue/auto-import-resolver": "^4.5.4",
     "@types/node": "^25.1.0",
@@ -39,6 +41,7 @@
     "typescript": "^5.9.3",
     "unplugin-vue-components": "^31.0.0",
     "vite": "^7.3.2",
+    "vitest": "^5.1.0",
     "vue-tsc": "^3.2.4"
   }
 }

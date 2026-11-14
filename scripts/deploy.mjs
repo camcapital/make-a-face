@@ -90,8 +90,13 @@ async function ensureRule() {
     console.log(`Created proxy rule ${hostname} -> ${siteId}`);
     return;
   }
-  if (rule.deploymentResourceType !== 'site' || rule.deploymentResourceId !== siteId) {
-    throw new Error(`${hostname} already points at ${rule.deploymentResourceId}, not ${siteId}`);
+  if (
+    rule.deploymentResourceType !== 'site' ||
+    rule.deploymentResourceId !== siteId
+  ) {
+    throw new Error(
+      `${hostname} already points at ${rule.deploymentResourceId}, not ${siteId}`,
+    );
   }
 }
 

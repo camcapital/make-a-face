@@ -19,5 +19,7 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       # Validates messages, type-checks and builds.
       - run: npm run build

@@ -22,7 +22,8 @@ Changes from upstream:
 
 - `src/utils/getApiUrl.ts` reads the API base URL and version from
   `VITE_API_URL` and `VITE_API_VERSION`.
-- `scripts/deploy.mjs` and `.github/workflows/` build and deploy the site.
+- `features/` holds Gherkin specs and their vitest steps.
+- `scripts/deploy.mjs` and `.github/workflows/` test, build and deploy the site.
 
 DiceBear is MIT licensed by Florian Körner; see [LICENSE](LICENSE). Each avatar
 style has its own license, which the editor shows when you download.
@@ -47,11 +48,12 @@ Requires Node 20.19 or later.
 npm install
 npm run dev     # dev server with hot reload
 npm run build   # validate messages, type-check and build to dist/
+npm test        # Gherkin scenarios in features/, run with vitest
 ```
 
 ## Deployment
 
-Every push to `main` runs `.github/workflows/deploy.yml`, which builds `dist/`,
+Every push to `main` runs `.github/workflows/deploy.yml`, which tests and builds `dist/`,
 uploads it as a static AppWrite Site (`makeaface`), and points
 `makeaface.camcap.dev` at it. It can also be run by hand from the Actions tab.
 
