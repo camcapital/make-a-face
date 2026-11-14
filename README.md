@@ -22,6 +22,8 @@ Changes from upstream:
 
 - `src/utils/getApiUrl.ts` reads the API base URL and version from
   `VITE_API_URL` and `VITE_API_VERSION`.
+- `index.html` no longer loads DiceBear's analytics (`u.dicebear.com`) or
+  their iubenda cookie-consent config.
 - `features/` holds Gherkin specs and their vitest steps.
 - `scripts/deploy.mjs` and `.github/workflows/` test, build and deploy the site.
 
