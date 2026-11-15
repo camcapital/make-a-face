@@ -13,3 +13,9 @@ Feature: Shared links show Make A Face, not DiceBear
     Given the editor's index.html
     Then the favicon is the PNG "/favicon.png"
     And the DiceBear "favicon.ico" is gone
+
+  Scenario: Shared links preview the Make A Face icon
+    Given the editor's index.html
+    Then the "og:image" property is "https://makeaface.camcap.dev/favicon.png"
+    And the "og:image:type" property is "image/png"
+    And the "og:image:width" and "og:image:height" match the icon's size
