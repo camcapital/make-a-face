@@ -24,6 +24,8 @@ Changes from upstream:
   `VITE_API_URL` and `VITE_API_VERSION`.
 - `index.html` no longer loads DiceBear's analytics (`u.dicebear.com`) or
   their iubenda cookie-consent config.
+- `index.html` titles the page "Make A Face" (also `og:title` and
+  `og:site_name`), and `public/favicon.png` replaces DiceBear's favicon.
 - `features/` holds Gherkin specs and their vitest steps.
 - `scripts/deploy.mjs` and `.github/workflows/` test, build and deploy the site.
 
